@@ -1,16 +1,12 @@
 <template>
     <div>
-        <h1>README MD</h1>
+        <h1>README MD of {{username}}/{{reponame}}</h1>
 
-        <div v-if="readmeObj.isFound == true">
-            <vue-markdown>{{readmeObj.content}}</vue-markdown>
-        </div>
-
-        <div v-if="readmeObj.isFound == false">
+        <button @click="backToRepos(username)">Back to repos</button>
+        <div v-if="readmeObj.isLoaded == true">
             <vue-markdown>{{readmeObj.content}}</vue-markdown>
         </div>
         <br>
-        <button @click="backToRepos(username)">Back to repos</button>
     </div>
 </template>
 
@@ -23,9 +19,10 @@ export default {
     data() {
         return {
             username: this.$router.currentRoute.params.username,
+            reponame: this.$router.currentRoute.params.readme,
             readmeObj: {
                 content: '',
-                isFound: false
+                isLoaded: false
             }
         }
     },
@@ -52,15 +49,16 @@ export default {
         decodeContent(content) {
             if(content == '') {
                 this.readmeObj.content = "README is empty"
-                this.readmeObj.isFound = true
+                this.readmeObj.isLoaded = true
             } else {
                 this.readmeObj.content = atob(content)
-                this.readmeObj.isFound = true
+                this.readmeObj.isLoaded = true
             }
         },
         readmeNotFound(message, status) {
             if (status == 404) {
                 this.readmeObj.content = `README ${message}`
+                this.readmeObj.isLoaded = true
             }
         }
     },
