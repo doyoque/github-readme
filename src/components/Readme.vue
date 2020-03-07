@@ -6,9 +6,9 @@
             <vue-markdown>{{readmeObj.content}}</vue-markdown>
         </div>
 
-        <!-- <div v-if="readmeObj.isFound == false">
+        <div v-if="readmeObj.isFound == false">
             <vue-markdown>{{readmeObj.content}}</vue-markdown>
-        </div> -->
+        </div>
         <br>
         <button @click="backToRepos(username)">Back to repos</button>
     </div>
