@@ -1,18 +1,40 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <form @submit.prevent="getRepos">
+      <input type="text" v-model="user.name" placeholder="github username" />
+
+      <button type="submit">Looking for user repository</button>
+    </form>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+// import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      user: {
+        name: 'doyoque',
+        submitted: {
+          name: ''
+        }
+      }
+    }
+  },
+  methods: {
+
+    getRepos() {
+      this.user.submitted.name = this.user.name
+      let username = { name: this.user.submitted.name }
+      this.user.name = ''
+      event.target.reset()
+
+      this.$router.push({ name: 'ListRepos', params: {username: username.name} })
+    }
   }
 }
 </script>
