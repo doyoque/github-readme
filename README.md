@@ -1,29 +1,16 @@
 # github-readme
 
-## Project setup
+## A simple vue application that fetch readme of a repository
+
+To run this application make sure you clone this repository first.
 ```
-npm install
+git clone https://github.com/doyoque/github-readme.git
+cd github-readme/
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Magical setup
 
-### Compiles and minifies for production
+This command will installing all dependency, run production build, linter, and then run the application as development mode
 ```
-npm run build
+npm run all
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
