@@ -1,11 +1,40 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <form @submit.prevent="getRepos">
-      <input type="text" v-model="user.name" placeholder="github username" />
-
-      <button type="submit">Looking for user repository</button>
-    </form>
+  <div id="home">
+    <v-app>
+      <v-content>
+        <v-container fluid fill-height>
+          <v-layout align-center justify-center>
+            <v-flex xs12 sm8 md4>
+              <v-card class="elevation-12">
+                <v-toolbar color="primary" dark flat>
+                  <v-toolbar-title>Repo viewer</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                </v-toolbar>
+                <v-card-text>
+                  <v-form onSubmit="return false;">
+                    <v-text-field
+                      ref="username" 
+                      label="username" 
+                      placeholder="github username" 
+                      prepend-icon="person" 
+                      type="text"
+                      required
+                      :rules="[() => !!username || 'This field is required']"
+                      v-model="username"
+                      :error-messages="errorMessages"
+                    ></v-text-field>
+                  </v-form>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" @click="getRepos">Search</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-app>
   </div>
 </template>
 
@@ -17,23 +46,29 @@ export default {
   name: 'Home',
   data() {
     return {
-      user: {
-        name: '',
-        submitted: {
-          name: ''
-        }
+      errorMessages: '',
+      formHasError: false,
+      username: null,
+    }
+  },
+  computed: {
+    form() {
+      return {
+        username: this.username
       }
     }
   },
   methods: {
 
     getRepos() {
-      this.user.submitted.name = this.user.name
-      let username = { name: this.user.submitted.name }
-      this.user.name = ''
-      event.target.reset()
+      this.formHasError = false
 
-      this.$router.push({ name: 'ListRepos', params: {username: username.name} })
+      Object.keys(this.form).forEach(f => {
+        if(!this.form[f]) this.formHasError = true
+        this.$refs[f].validate(true)
+      })
+
+      if(this.formHasError == false) this.$router.push({ name: 'ListRepos', params: {username: this.username} })
     }
   }
 }
