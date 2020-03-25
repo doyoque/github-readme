@@ -7,9 +7,11 @@ import vuetify from './plugins/vuetify';
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import Loader from './views/_loader.vue'
 
 Vue.config.productionTip = false
 Vue.component('vue-markdown', VueMarkdown)
+Vue.component('loader', Loader)
 
 new Vue({
   router,

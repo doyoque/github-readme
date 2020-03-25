@@ -1,10 +1,25 @@
 <template>
   <div id="listRepos">
     <v-app>
+      <loader></loader>
       <div>
         <v-app-bar dense dark>
           <v-toolbar-title>{{username}} Repos</v-toolbar-title>
           <v-spacer></v-spacer>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                icon
+                large
+                target="_blank"
+                v-on="on"
+                @click="backToIndex()"
+              >
+                <v-icon>keyboard_backspace</v-icon>
+              </v-btn>
+            </template>
+            <span>Back to index</span>
+          </v-tooltip>
         </v-app-bar>
       </div>
       <v-container fluid>
@@ -58,7 +73,11 @@ export default {
           username: this.username,
           readme: name
         }
-      })
+      }),
+      this.$store.dispatch('isLoaded', true)
+    },
+    backToIndex() {
+      this.$router.push({ name: 'Home' })
     }
   }
 }

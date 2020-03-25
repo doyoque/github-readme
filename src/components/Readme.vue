@@ -1,5 +1,6 @@
 <template>
   <div id="readMe">
+    <loader></loader>
     <v-app>
       <v-content>
         <v-container fluid fill-height>
@@ -67,6 +68,7 @@ export default {
           username: username
         }
       })
+      this.$store.dispatch('initState')
     },
     decodeContent(content) {
       if(content == '') {
@@ -76,12 +78,14 @@ export default {
         this.readmeObj.content = atob(content)
         this.readmeObj.isLoaded = true
       }
+      this.$store.dispatch('isLoaded', false)
     },
     readmeNotFound(message, status) {
       if(status == 404) {
         this.readmeObj.content = `README ${message}`
         this.readmeObj.isLoaded = true
       }
+      this.$store.dispatch('isLoaded', false)
     }
   },
 }

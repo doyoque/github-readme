@@ -7,7 +7,7 @@
             <v-flex xs12 sm8 md4>
               <v-card class="elevation-12">
                 <v-toolbar color="primary" dark flat>
-                  <v-toolbar-title>Repo viewer</v-toolbar-title>
+                  <v-toolbar-title>README Viewer</v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-card-text>
@@ -50,6 +50,9 @@ export default {
       formHasError: false,
       username: null,
     }
+  },
+  created() {
+    this.$store.dispatch('initState')
   },
   computed: {
     form() {
