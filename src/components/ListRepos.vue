@@ -67,6 +67,13 @@ export default {
   },
   methods: {
     getReadme(name) {
+      let repo = {
+        username: this.username,
+        readme: name
+      }
+
+      this.$store.dispatch('getRepo', repo)
+
       this.$router.push({
         name: 'Readme',
         params: {
