@@ -1,6 +1,7 @@
 <template>
   <div id="readMe">
-    <loader></loader>
+    {{readme}}
+    <!-- <loader></loader>
     <v-app>
       <v-content>
         <v-container fluid fill-height>
@@ -33,60 +34,70 @@
           </v-layout>
         </v-container>
       </v-content>
-    </v-app>
+    </v-app> -->
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import GITHUB_API from './../api/api'
+// import axios from 'axios'
+// import GITHUB_API from './../api/api'
 
 export default {
   name: 'Readme',
   data() {
     return {
-      username: this.$router.currentRoute.params.username,
-      reponame: this.$router.currentRoute.params.readme,
-      readmeObj: {
-        content: '',
-        isLoaded: false
-      }
+      readme: 'biji ngondoy'
     }
   },
-  created() {
-    let full_name = this.username+'/'+this.$router.currentRoute.params.readme
-    axios
-      .get(`${GITHUB_API.userReadme}${full_name}/readme`)
-      .then(res => { this.decodeContent(res.data.content) })
-      .catch(err => { this.readmeNotFound(err.response.data.message, err.response.status) })
-  },
-  methods: {
-    backToRepos(username) {
-      this.$router.push({
-        name: 'ListRepos',
-        params: {
-          username: username
-        }
-      })
-      this.$store.dispatch('initState')
-    },
-    decodeContent(content) {
-      if(content == '') {
-        this.readmeObj.content = "README is empty"
-        this.readmeObj.isLoaded = true
-      } else {
-        this.readmeObj.content = atob(content)
-        this.readmeObj.isLoaded = true
-      }
-      this.$store.dispatch('isLoaded', false)
-    },
-    readmeNotFound(message, status) {
-      if(status == 404) {
-        this.readmeObj.content = `README ${message}`
-        this.readmeObj.isLoaded = true
-      }
-      this.$store.dispatch('isLoaded', false)
+  // data() {
+  //   return {
+  //     username: this.$router.currentRoute.params.username,
+  //     reponame: this.$router.currentRoute.params.readme,
+  //     readmeObj: {
+  //       content: '',
+  //       isLoaded: false
+  //     }
+  //   }
+  // },
+  // created() {
+  //   let full_name = this.username+'/'+this.$router.currentRoute.params.readme
+  //   axios
+  //     .get(`${GITHUB_API.userReadme}${full_name}/readme`)
+  //     .then(res => { this.decodeContent(res.data.content) })
+  //     .catch(err => { this.readmeNotFound(err.response.data.message, err.response.status) })
+  // },
+  // methods: {
+  //   backToRepos(username) {
+  //     this.$router.push({
+  //       name: 'ListRepos',
+  //       params: {
+  //         username: username
+  //       }
+  //     })
+  //     this.$store.dispatch('initState')
+  //   },
+  //   decodeContent(content) {
+  //     if(content == '') {
+  //       this.readmeObj.content = "README is empty"
+  //       this.readmeObj.isLoaded = true
+  //     } else {
+  //       this.readmeObj.content = atob(content)
+  //       this.readmeObj.isLoaded = true
+  //     }
+  //     this.$store.dispatch('isLoaded', false)
+  //   },
+  //   readmeNotFound(message, status) {
+  //     if(status == 404) {
+  //       this.readmeObj.content = `README ${message}`
+  //       this.readmeObj.isLoaded = true
+  //     }
+  //     this.$store.dispatch('isLoaded', false)
+  //   }
+  // },
+  computed: {
+    theRepo() {
+      return atob(this.$store.getters.getTheRepo)
     }
-  },
+  }
 }
 </script>

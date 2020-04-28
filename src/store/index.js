@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import GITHUB_API from './../api/api'
-import axios from 'axios'
+import GithubService from '@/services/GithubService.js'
 
 Vue.use(Vuex)
 
@@ -43,26 +42,37 @@ export default new Vuex.Store({
   },
   actions: {
     getAllRepos({commit}, username) {
-      axios
-        .get(`${GITHUB_API.user}${username}/repos`)
+      GithubService.getRepos(username)
         .then(res => { commit('GET_REPOS', res.data) })
         .catch(err => { commit('ERROR', err.data) })
     },
     getRepo({commit}, repo) {
       let full_name = repo.username+'/'+repo.readme
-      axios
-        .get(`${GITHUB_API.userReadme}${full_name}/readme`)
+      GithubService.getReadme(full_name)
         .then(res => {
-          let getRepo = { username: repo.username, readme: res.data.content }
+          if (res.data.content == '') {
+            res.data.content = 'README is empty'
+          }
+
+          let getRepo = {
+            username: repo.username, 
+            readme: res.data.content
+          }
+
           commit('DETAIL_REPOS', getRepo)
         })
-        .catch(err => { commit('ERROR', err.data) })
+        .catch(err => { commit('ERROR', err.response.data.message) })
     },
     initState({commit}) {
       commit('INIT_STATE')
     },
     isLoaded({commit}, status) {
       commit('ISLOADED', status)
+    },
+  },
+  getters: {
+    getTheRepo(state) {
+      return state.repo
     },
   }
 })

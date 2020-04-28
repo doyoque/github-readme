@@ -1,6 +1,5 @@
 const GITHUB_API = Object.freeze({
-    user: 'https://api.github.com/users/', /**get all repo */
-    userReadme: 'https://api.github.com/repos/' /**get readme from repo */
+		uri: 'https://api.github.com/'
   })
   
   export default GITHUB_API
