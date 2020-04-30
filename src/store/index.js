@@ -7,10 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     repos: [],
-    repo: {
-      username: '',
-      readme: ''
-    },
+    repoReadme: '',
     error: {
       status: false,
       data: {}
@@ -22,15 +19,14 @@ export default new Vuex.Store({
       state.repos = items
       state.isLoading = false
     },
+    GET_README(state, readme) {
+      state.repoReadme = readme
+      state.isLoading = false
+    },
     INIT_STATE(state) {
       state.repos = []
-      state.repo = []
+      state.repoReadme = ''
       state.isLoading = true
-    },
-    DETAIL_REPOS(state, repo) {
-      state.repo.username = repo.username
-      state.repo.readme = repo.readme
-      state.isLoading = false
     },
     ISLOADED(state, status) {
       state.isLoading = status
@@ -46,22 +42,8 @@ export default new Vuex.Store({
         .then(res => { commit('GET_REPOS', res.data) })
         .catch(err => { commit('ERROR', err.data) })
     },
-    getRepo({commit}, repo) {
-      let full_name = repo.username+'/'+repo.readme
-      GithubService.getReadme(full_name)
-        .then(res => {
-          if (res.data.content == '') {
-            res.data.content = 'README is empty'
-          }
-
-          let getRepo = {
-            username: repo.username, 
-            readme: res.data.content
-          }
-
-          commit('DETAIL_REPOS', getRepo)
-        })
-        .catch(err => { commit('ERROR', err.response.data.message) })
+    detailRepo({commit}, readme) {
+      commit('GET_README', readme)
     },
     initState({commit}) {
       commit('INIT_STATE')
@@ -70,9 +52,4 @@ export default new Vuex.Store({
       commit('ISLOADED', status)
     },
   },
-  getters: {
-    getTheRepo(state) {
-      return state.repo
-    },
-  }
 })

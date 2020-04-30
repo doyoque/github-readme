@@ -50,6 +50,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import GithubService from '@/services/GithubService.js'
 
 export default {
   name: 'ListRepos',
@@ -67,12 +68,9 @@ export default {
   },
   methods: {
     getReadme(name) {
-      let repo = {
-        username: this.username,
-        readme: name
-      }
-
-      this.$store.dispatch('getRepo', repo)
+      GithubService.getReadme(this.username+'/'+name)
+        .then(res => this.decodeContent(res.data.content))
+        .catch(err => console.log(err))
 
       this.$router.push({
         name: 'Readme',
@@ -80,9 +78,20 @@ export default {
           username: this.username,
           readme: name
         }
-      }),
+      })
       this.$store.dispatch('isLoaded', true)
     },
+
+    decodeContent(content) {
+      if(content == '') {
+        content = "README is empty"
+      } else {
+        content = atob(content)
+      }
+
+      this.$store.dispatch('detailRepo', content)
+    },
+
     backToIndex() {
       this.$router.push({ name: 'Home' })
     }
