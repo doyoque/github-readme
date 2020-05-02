@@ -26,7 +26,7 @@
                 </v-toolbar>
                 <v-card-text>
                   <loader></loader>
-                  {{ readme }}
+                  <vue-simple-markdown :source="readme"></vue-simple-markdown>
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -38,13 +38,20 @@
 </template>
 
 <script>
+import GithubService from '@/services/GithubService.js'
 
 export default {
   name: 'Readme',
   data() {
     return {
       username: this.$router.currentRoute.params.username,
+      repo: this.$router.currentRoute.params.repo
     }
+  },
+  created() {
+    GithubService.getReadme(this.username+'/'+this.repo)
+      .then(res => this.decodeContent(res.data.content))
+      .catch(err => console.log(err))
   },
   computed: {
     readme() {
@@ -59,6 +66,16 @@ export default {
           username: username
         }
       })
+    },
+
+    decodeContent(content) {
+      if(content == '') {
+        content = "README is empty"
+      } else {
+        content = atob(content)
+      }
+
+      this.$store.dispatch('detailRepo', content)
     },
   }
 }

@@ -7,10 +7,6 @@ export default new Vuex.Store({
   state: {
     repos: [],
     repoReadme: '',
-    error: {
-      status: false,
-      data: {}
-    },
     isLoading: true,
   },
   mutations: {
@@ -29,10 +25,6 @@ export default new Vuex.Store({
     },
     ISLOADED(state, status) {
       state.isLoading = status
-    },
-    ERROR(state, error) {
-      state.error.status = true,
-      state.error.data = error
     },
   },
   actions: {

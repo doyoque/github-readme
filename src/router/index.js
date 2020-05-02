@@ -18,7 +18,7 @@ const routes = [
     component: ListRepos,
   },
   {
-    path: '/repos/:username/:readme',
+    path: '/repos/:username/:repo',
     name: 'Readme',
     component: Readme
   }

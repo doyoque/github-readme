@@ -59,6 +59,13 @@ export default {
       username: this.$router.currentRoute.params.username
     }
   },
+  created() {
+    GithubService.getRepos(this.username)
+      .then(res => { 
+        this.$store.dispatch('getAllRepos', res.data) 
+      })
+      .catch(err => { console.log(err) })
+  },
   computed: {
     ...mapState(['repos'])
   },
@@ -72,20 +79,10 @@ export default {
         name: 'Readme',
         params: {
           username: this.username,
-          readme: name
+          repo: name
         }
       })
       this.$store.dispatch('isLoaded', true)
-    },
-
-    decodeContent(content) {
-      if(content == '') {
-        content = "README is empty"
-      } else {
-        content = atob(content)
-      }
-
-      this.$store.dispatch('detailRepo', content)
     },
 
     backToIndex() {
