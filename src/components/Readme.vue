@@ -51,7 +51,7 @@ export default {
   created() {
     GithubService.getReadme(this.username+'/'+this.repo)
       .then(res => this.decodeContent(res.data.content))
-      .catch(err => console.log(err))
+      .catch(err => { console.log(err) })
   },
   computed: {
     readme() {
