@@ -59,10 +59,6 @@ export default {
       username: this.$router.currentRoute.params.username
     }
   },
-  created() {
-    let dataThis = this
-    this.$store.dispatch('getAllRepos', dataThis.username)
-  },
   computed: {
     ...mapState(['repos'])
   },

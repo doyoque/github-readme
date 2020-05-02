@@ -41,6 +41,7 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
+import GithubService from '@/services/GithubService.js'
 
 export default {
   name: 'Home',
@@ -71,7 +72,15 @@ export default {
         this.$refs[f].validate(true)
       })
 
-      if(this.formHasError == false) this.$router.push({ name: 'ListRepos', params: {username: this.username} })
+      if(this.formHasError == false) {
+        GithubService.getRepos(this.username)
+          .then(res => { 
+            this.$store.dispatch('getAllRepos', res.data) 
+          })
+          .catch(err => { console.log(err) })
+        
+        this.$router.push({ name: 'ListRepos', params: {username: this.username} })
+      }
     }
   }
 }

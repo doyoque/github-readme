@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import GithubService from '@/services/GithubService.js'
 
 Vue.use(Vuex)
 
@@ -37,10 +36,8 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getAllRepos({commit}, username) {
-      GithubService.getRepos(username)
-        .then(res => { commit('GET_REPOS', res.data) })
-        .catch(err => { commit('ERROR', err.data) })
+    getAllRepos({commit}, repos) {
+      commit('GET_REPOS', repos)
     },
     detailRepo({commit}, readme) {
       commit('GET_README', readme)
