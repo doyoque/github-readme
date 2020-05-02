@@ -73,7 +73,7 @@ export default {
     getReadme(name) {
       GithubService.getReadme(this.username+'/'+name)
         .then(res => this.decodeContent(res.data.content))
-        .catch(err => console.log(err))
+        .catch(err => { console.log(err) })
 
       this.$router.push({
         name: 'Readme',
