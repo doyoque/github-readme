@@ -23,24 +23,25 @@
         </v-app-bar>
       </div>
       <v-container fluid>
-        <v-row>
-          <v-col cols="12">
-            <v-row dense>
-              <v-col cols="4" v-for="(item, index) in repos" :key="index">
-                <v-card 
-                  outlined 
-                  tile 
-                  class="m-3 pa-6" 
-                  height="100%" 
-                  hover
-                  @click="getReadme(item.name)"
-                >
-                  <v-card-title>{{item.name}}</v-card-title>
-                  <v-card-subtitle>{{item.full_name}}</v-card-subtitle>
-                  <v-card-text>{{item.description}}</v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
+        <v-row dense>
+          <v-col
+            v-for="(item, index) in repos"
+            :key="index"
+            cols="12"
+            sm="4"
+          >
+            <v-card
+              class="pa-6 m-3"
+              outlined
+              tile
+              height="100%"
+              hover
+              @click="getReadme(item.name)"
+            >
+              <v-card-title>{{item.name}}</v-card-title>
+              <v-card-subtitle>{{item.full_name}}</v-card-subtitle>
+              <v-card-text>{{item.description}}</v-card-text>
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
