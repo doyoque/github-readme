@@ -26,6 +26,8 @@
                 </v-toolbar>
                 <v-card-text>
                   <loader></loader>
+                  {{ readme }}
+                  <br>
                   <vue-simple-markdown :source="readme"></vue-simple-markdown>
                 </v-card-text>
               </v-card>
