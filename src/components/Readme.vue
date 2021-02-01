@@ -1,7 +1,7 @@
 <template>
   <div id="readMe">
     <v-app>
-      <v-content>
+      <v-main>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
             <v-flex xs12 md7>
@@ -32,7 +32,7 @@
             </v-flex>
           </v-layout>
         </v-container>
-      </v-content>
+      </v-main>
     </v-app>
   </div>
 </template>
